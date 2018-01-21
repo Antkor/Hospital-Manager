@@ -180,4 +180,50 @@ public class DbConnector {
 		}
 		return d;
 	}
+	
+	public void deleteDoctor(Doctor d) {
+		openConnection();
+		String query = "DELETE FROM doctor WHERE id = ? ";
+		java.sql.PreparedStatement pstmt = null;
+
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, d.getArMitrwou());
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} 
+
+		closeConnection();
+	}
+	
+	public void saveDoctor(Doctor d) {		
+		openConnection();
+				
+		String query = "INSERT INTO `doctor` (`date_created`, `date_updated`, `name`, `surname`, `telephone`, `speciality`, `department_id`) "
+				+ "VALUES (?, ?, ?, ?, ?, ?, ?) ";
+		java.sql.PreparedStatement pstmt = null;
+
+		try {
+			
+		    java.util.Date today = new java.util.Date();
+		    java.sql.Date sqlDate =  new java.sql.Date(today.getTime());
+			
+			pstmt = conn.prepareStatement(query);
+			pstmt.setDate(1, sqlDate);
+			pstmt.setDate(2, sqlDate);
+			pstmt.setString(3, d.getFirstname());
+			pstmt.setString(4, d.getLastname());
+			pstmt.setString(5, d.getTelephone());
+			pstmt.setString(6, d.getSpeciality());
+			pstmt.setInt(7, d.getDepartment());
+			
+			pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} 
+
+		closeConnection();
+	}
 }
