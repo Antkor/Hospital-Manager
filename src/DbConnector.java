@@ -140,4 +140,25 @@ public class DbConnector {
 
 		closeConnection();
 	}
+	
+	public ArrayList<Doctor> getAllDoctors() {
+		ArrayList<Doctor> doctors = new ArrayList<Doctor>();
+		openConnection();
+		try {		
+			ResultSet rs = st.executeQuery("select * from doctor");
+			
+			while(rs.next()) {
+				Doctor d = new Doctor(rs.getInt("id"), rs.getString("name"), rs.getString("surname"), rs.getString("telephone"), 
+										rs.getString("speciality"), rs.getInt("department_id"));
+				doctors.add(d);
+			}
+		}
+		catch (Exception e) {
+			return null;
+		}
+		finally {
+			closeConnection();
+		}
+		return doctors;
+	}
 }
