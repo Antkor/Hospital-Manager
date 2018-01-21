@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 
 public class Patient {
 
@@ -102,5 +103,12 @@ public class Patient {
 	public static Patient search(String amka){
 	    connector = new DbConnector();
 		return (connector.getPatientByAmka(amka));
+	}
+	public void save(Patient p){
+		connector = new DbConnector();
+		connector.savePatient(p);
+	}
+	public ArrayList<Patient> getData(){
+		return PatientList.getPatients();
 	}
 }
