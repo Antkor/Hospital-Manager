@@ -72,4 +72,24 @@ public class DbConnector {
 		}
 		return patients;
 	}
+	
+	public Patient getPatientByAmka(String amka) {
+		Patient p = null;
+		openConnection();
+		try {		
+			ResultSet rs = st.executeQuery("select * from patient where amka='"+amka+"'");			
+			while(rs.next()) {
+				p = new Patient(rs.getString("amka"), rs.getString("lastname"), rs.getString("firsname"), rs.getString("address"), 
+						rs.getString("telephone"), rs.getString("email"), rs.getInt("age"), rs.getString("gender"), 
+						rs.getString("bloodtype"), rs.getString("insurance"), rs.getString("info"));
+			}
+		}
+		catch (Exception e) {
+			return null;
+		}
+		finally {
+			closeConnection();
+		}
+		return p;
+	}
 }
