@@ -161,4 +161,23 @@ public class DbConnector {
 		}
 		return doctors;
 	}
+	
+	public Doctor getDoctorByAm(int am) {
+		Doctor d = null;
+		openConnection();
+		try {		
+			ResultSet rs = st.executeQuery("select * from doctor where id='"+am+"'");			
+			while(rs.next()) {
+				d = new Doctor(rs.getInt("id"), rs.getString("name"), rs.getString("surname"), rs.getString("telephone"), 
+						rs.getString("speciality"), rs.getInt("department_id"));
+			}
+		}
+		catch (Exception e) {
+			return null;
+		}
+		finally {
+			closeConnection();
+		}
+		return d;
+	}
 }
