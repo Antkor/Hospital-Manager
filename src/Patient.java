@@ -12,7 +12,7 @@ public class Patient {
 	private String bloodType;
 	private String insurance;
 	private String info;
-	private DbConnector connector;
+	private static DbConnector connector;
 	
 	public Patient(String amka, String lastname, String firstname, String address,
 			String telephone, String email, int age, String gender,
@@ -95,5 +95,12 @@ public class Patient {
 	}
 	public void setInfo(String info) {
 		this.info = info;
+	}
+	public void delete(Patient p){
+		connector.deletePatient(p);
+	}
+	public static Patient search(String amka){
+	    connector = new DbConnector();
+		return (connector.getPatientByAmka(amka));
 	}
 }
