@@ -92,4 +92,21 @@ public class DbConnector {
 		}
 		return p;
 	}
+	
+	public void deletePatient(Patient p) {
+		openConnection();
+		String query = "DELETE FROM patient WHERE amka = ? ";
+		java.sql.PreparedStatement pstmt = null;
+
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, p.getAmka());
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} 
+
+		closeConnection();
+
+	}
 }
