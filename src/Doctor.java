@@ -55,4 +55,11 @@ public class Doctor {
 	public void setDepartment(int department) {
 		this.department = department;
 	}
+	public void save(Doctor d){
+		connector = new DbConnector();
+		connector.saveDoctor(d);
+	}
+	public void delete(Doctor d){
+		connector.deleteDoctor(d);
+	}
 }
