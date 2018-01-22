@@ -226,4 +226,25 @@ public class DbConnector {
 
 		closeConnection();
 	}
+	
+	public ArrayList<Appointment> getAllAppointments() {
+		ArrayList<Appointment> appointments = new ArrayList<Appointment>();
+		openConnection();
+		try {		
+			ResultSet rs = st.executeQuery("select * from appointment");
+			
+			while(rs.next()) {
+				Appointment a = new Appointment(rs.getDate("date"),rs.getString("date"), rs.getString("patient_amka"), rs.getInt("doctor_id"), rs.getString("notes"));
+				appointments.add(a);
+			}
+		}
+		catch (Exception e) {
+			return null;
+		}
+		finally {
+			closeConnection();
+		}
+		return appointments;
+	}
+	
 }
