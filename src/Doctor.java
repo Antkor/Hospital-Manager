@@ -62,4 +62,8 @@ public class Doctor {
 	public void delete(Doctor d){
 		connector.deleteDoctor(d);
 	}
+	public static Doctor search(int arMitrwou){
+		connector = new DbConnector();
+		return (connector.getDoctorByAm(arMitrwou));
+	}
 }
