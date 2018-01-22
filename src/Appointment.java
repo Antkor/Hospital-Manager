@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Appointment {
@@ -46,5 +47,15 @@ public class Appointment {
 	}
 	public void setInfo(String info) {
 		this.info = info;
+	}
+	public ArrayList<Appointment> getData(){
+		return AppointmentList.getAppointments();
+	}
+	public void save(Appointment a){
+		connector = new DbConnector();
+		connector.saveAppointment(a);
+	}
+	public void delete(Appointment a){
+		connector.deleteAppointment(a);
 	}
 }
