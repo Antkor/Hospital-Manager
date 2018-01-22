@@ -1,4 +1,5 @@
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -247,4 +248,45 @@ public class DbConnector {
 		return appointments;
 	}
 	
+    public void saveAppointment(Appointment a) {                  
+        openConnection();
+                                        
+        String query = "INSERT INTO `appointment` (`date`, `time`, `notes`, `patient_amka`, `doctor_id`) "
+                                        + "VALUES (?, ?, ?, ?) ";
+        java.sql.PreparedStatement pstmt = null;
+
+        try {
+                        
+                        pstmt = conn.prepareStatement(query);
+                        pstmt.setDate(1, (Date) a.getDay());
+                        pstmt.setString(1, a.getTime());
+                        pstmt.setString(2, a.getInfo());
+                        pstmt.setString(3, a.getAmkaPatient());
+                        pstmt.setInt(4, a.getArMitrwoyDoctor());
+                        
+                        pstmt.executeUpdate();
+                        
+        } catch (SQLException e) {
+                        e.printStackTrace();
+        } 
+
+        closeConnection();
+    }
+    
+    public void deleteAppointment(Appointment a) {
+        openConnection();
+        String query = "DELETE FROM appointment WHERE patient_amka = ? ";
+        java.sql.PreparedStatement pstmt = null;
+
+        try {
+                        pstmt = conn.prepareStatement(query);
+                        pstmt.setString(1, a.getAmkaPatient());
+                        pstmt.executeUpdate();
+        } catch (SQLException e) {
+                        e.printStackTrace();
+        } 
+
+        closeConnection();
+
+    }
 }
